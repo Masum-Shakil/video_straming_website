@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Video Details{% endblock title %}
+
+{% block mainContent %}
+<div class="justify-content-center">
+    <a href="{% url 'index' %}" class="btn btn-primary">Go Back to Home</a>
+</div>
+<div class="row justify-content-center">
+<div class="col-md-2  mt-5 text-center"></div>
+<div class="col-md-8  mt-5 text-center">
+<div class="card text-center" style="width: 56rem; align: center;">
+  {{ video.youtube_video_embed_code | safe }}
+  <div class="card-body text-center" style="height: 100px;">
+    <h5 class="card-title text-center">Title: {{ video.video_title }}</h5>
+    <p class="card-text text-center">Description: {{ video.video_description }}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item text-center">Submit your comment below:</li>
+    <form method="post">
+        {% csrf_token %}
+        <li class="list-group-item text-center">{{ form.comment }} <button type="submit" class = "btn btn-primary">Submit</button></li>
+    </form>
+  </ul>
+  <div class="card-body text-center">
+    {% if comments %}
+    {% for item in comments %}
+    <p class='text-success'>Comment #{{ forloop.counter }}: {{ item.comment }} | Created at: {{ item.created_at }}</p>
+    {% endfor %}
+    {% else %}
+    <p>No Comments Are Found</p>
+    {% endif %}
+  </div>
+</div>
+</div>
+<div class="col-md-2  mt-5 text-center"></div>
+</div>
+{% endblock mainContent %}
